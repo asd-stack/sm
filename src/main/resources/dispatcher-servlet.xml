@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        <!--配置IO扫描-->
+        <context:component-scan base-package="com.user"/>
+        <context:component-scan base-package="com.controller"/>
+        <context:component-scan base-package="com.fileupload"/>
+       <!--注解-->
+       <!--不处理静态资源-->
+       <mvc:default-servlet-handler/>
+       <mvc:annotation-driven/>
+        <!--试图处理器-->
+       <!--<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+           <!--<property name="prefix" value="/WEB-INF/view/"/>-->
+           <!--<property name="suffix" value=".jsp"/>-->
+       <!--</bean>-->
+    <!--Commons-文件上传解析
+        CommonsMultipartResolver用户通用的文件上传，支持各种版本的Servlet
+    -->
+    <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" id="manager">
+        <property name="favorParameter" value="false"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="text/html"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="html" value="text/html;charset=UTF-8"/>
+                <entry key="json" value="application/json;charset=UTF-8"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="viewResolvers">
+            <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+                  id="internalResourceViewResolver">
+                <!-- 前缀 -->
+                <property name="prefix" value="/static/jsp/" />
+                <!-- 后缀 -->
+                <property name="suffix" value=".jsp" />
+            </bean>
+        </property>
+        <property name="defaultViews">
+            <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+        </property>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--默认编码格式-->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!--上传文件最大限制-->
+        <property name="maxUploadSize" value="10485760000"/>
+        <!--缓冲区大小-->
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+    <!--拦截器-->
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--&lt;!&ndash;拦截谁&ndash;&gt;-->
+            <!--<mvc:mapping path=""/>-->
+            <!--&lt;!&ndash;不拦截谁&ndash;&gt;-->
+            <!--<mvc:exclude-mapping path=""/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+</beans>

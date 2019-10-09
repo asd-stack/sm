@@ -1,0 +1,38 @@
+一、回顾S2阶段文件上传
+    1、注意事项
+        From表单
+            method=post
+            enctype="multipart/form-data"
+    2、使用步骤
+        1、导包
+            commons-io
+            commons-fileupload
+        2、
+            1.判断请求是否是multipart/form-data
+            2、解析请求
+            3、判断是不是普通表单字段
+            4、创建一个File
+            5、写入
+二、SpringMVC框架的文件上传
+    1）CommonsMultipartResolver
+                1.适应任何版本的Servlet
+    2）导包
+        commons-IO
+        Commons-fileupload
+        Commons-logging
+        Commons-lang
+    3）创建UI界面
+    4）编写配置文件
+        id="multipartResolver"
+    5)编写Controller
+        1.报错文件的方法
+            多文件上传
+            @RequestParam MultipartFile[] files
+        2.前端form表单文件上传控件name属性一定方法入参名一致
+
+
+     练习：
+            实现多文件上传，必须控制上传的文件大小，文件名采用英文，最好不要使用中文
+            报错：显示表单页面，提示错误信息
+            成功：成功页面，显示上传的图片
+
